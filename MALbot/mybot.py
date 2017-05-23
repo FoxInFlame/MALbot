@@ -15,6 +15,23 @@ import urllib.request # for HTTP requests
 d = datetime.datetime.now()
 running_on_heroku = False
 
+if __name__ == "__main__":
+  # If the bot is already running
+  if os.path.isfile('BotRunning'):
+    log("The bot is already running, shutting down", Color.RED)
+    return
+
+  if os.environ.get('MEMCACHEDCLOUD_SERVERS', None):
+    import bmemcached
+
+    log('Running on heroku, using memcached', Color.BOLD)
+
+    running_on_heroku = True
+    mc = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+                           os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                           os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
+
+        
 while True: # Always run
   if d.isoweekday() == 2: # 1 is monday | 7 is sunday ()
 
@@ -23,8 +40,8 @@ while True: # Always run
         user_agent='MyAnimeList Daily Bot v0.1',
         client_id='kBddA1U8dPkUtA',
         client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-        username='MAL-bot',
-        password='Fox_MALbot_2002')
+        username=os.environ['REDDIT_PASSWORD'],
+        password=os.environ['REDDIT_USERNAME']')
     else:
       print("Not running on Heroku!")
       break;
