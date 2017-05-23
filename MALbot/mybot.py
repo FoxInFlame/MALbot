@@ -3,22 +3,31 @@ import time           # for sleep
 import praw           # for reddit
 import json           # for parsing json
 import datetime       # time of the week
-import urllib.request # for HTTP requests
+import gevent
+from gevent import monkey
 import pprint         # print stuff
 import random         # for random user selection
 from xml.dom import minidom        # for parsing XML
 
+monkey.patch_all()
+import urllib.request # for HTTP requests
+
 d = datetime.datetime.now()
+running_on_heroku = False
 
 while True: # Always run
-  if d.isoweekday() == 1: # 1 is monday | 7 is sunday ()
+  if d.isoweekday() == 2: # 1 is monday | 7 is sunday ()
 
-    reddit = praw.Reddit(
-      user_agent='MyAnimeList Daily Bot v0.1',
-      client_id='kBddA1U8dPkUtA',
-      client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-      username='MAL-bot',
-      password='Fox_MALbot_2002')
+    if running_on_heroku: 
+      reddit = praw.Reddit(
+        user_agent='MyAnimeList Daily Bot v0.1',
+        client_id='kBddA1U8dPkUtA',
+        client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
+        username='MAL-bot',
+        password='Fox_MALbot_2002')
+    else:
+      print("Not running on Heroku!")
+      break;
 
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
@@ -103,14 +112,25 @@ while True: # Always run
     user_list_response = json.loads(user_list_response_raw.decode('utf-8'))
 
     user_favourites = {}
-    for anime in user_list_response["favourites"]["anime"]:
+
+
+      
+    # for anime in user_list_response["favourites"]["anime"]:
+    def print_head(url):
+      print('Starting download from ' + url)
       request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + anime, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
       user_favourite_response_raw = connection.read()
       print(user_favourite_response_raw)
       user_favourites[anime] = json.loads(user_favourite_response_raw.decode('utf-8'));
 
-    print(user_favourites)
+    jobs = [gevent.spawn(print_head, anime) for anime in user_list_response["favourites"]["anime"]]
+
+    gevent.joinall(jobs)
+
+    pprint(jobs)
+    print("favourites:")
+    pprint(user_favourites)
 
 
 
