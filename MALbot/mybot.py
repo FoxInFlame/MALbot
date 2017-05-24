@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pdb            # Python Debugger
 import time           # for sleep
 import praw           # for reddit
@@ -7,45 +9,24 @@ import gevent
 from gevent import monkey
 import pprint         # print stuff
 import random         # for random user selection
+import os             # os related stuff
 from xml.dom import minidom        # for parsing XML
 
 monkey.patch_all()
 import urllib.request # for HTTP requests
 
 d = datetime.datetime.now()
-running_on_heroku = False
 
-if __name__ == "__main__":
-  # If the bot is already running
-  if os.path.isfile('BotRunning'):
-    log("The bot is already running, shutting down", Color.RED)
-    return
-
-  if os.environ.get('MEMCACHEDCLOUD_SERVERS', None):
-    import bmemcached
-
-    log('Running on heroku, using memcached', Color.BOLD)
-
-    running_on_heroku = True
-    mc = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-                           os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                           os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
-
-        
 while True: # Always run
-  if d.isoweekday() == 2: # 1 is monday | 7 is sunday ()
+  if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
 
-    if running_on_heroku: 
-      reddit = praw.Reddit(
-        user_agent='MyAnimeList Daily Bot v0.1',
-        client_id='kBddA1U8dPkUtA',
-        client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-        username=os.environ['REDDIT_PASSWORD'],
-        password=os.environ['REDDIT_USERNAME']')
-    else:
-      print("Not running on Heroku!")
-      break;
-
+    reddit = praw.Reddit(
+      user_agent='MyAnimeList Daily Bot v0.1',
+      client_id='kBddA1U8dPkUtA',
+      client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs', 
+      username='MAL-bot',
+      password='Fox_MALbot_2002')
+  
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
     post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
@@ -135,19 +116,27 @@ while True: # Always run
     # for anime in user_list_response["favourites"]["anime"]:
     def print_head(url):
       print('Starting download from ' + url)
-      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + anime, headers={'User-Agent': 'Magic Browser'})
+      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + url, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
       user_favourite_response_raw = connection.read()
       print(user_favourite_response_raw)
-      user_favourites[anime] = json.loads(user_favourite_response_raw.decode('utf-8'));
+      user_favourites[url] = json.loads(user_favourite_response_raw.decode('utf8'));
 
     jobs = [gevent.spawn(print_head, anime) for anime in user_list_response["favourites"]["anime"]]
 
-    gevent.joinall(jobs)
+    gevent.joinall(jobs) # call all gvents
 
-    pprint(jobs)
-    print("favourites:")
-    pprint(user_favourites)
+    favourite_arr = [] # Will fill up with markdown
+    for key, favourite in user_favourites.items():
+      print(favourite["title"])
+      favourite_arr.append(
+        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
+      )
+
+    if(len(favourite_arr) == 0):
+      favourite_str = "*None* | *None* | *None*"
+    else:
+      favourite_str = ''.join(favourite_arr)
 
 
 
@@ -159,7 +148,7 @@ while True: # Always run
 
 ---
 ## Top ranking anime
-Rank | Score | Title
+Rank | MAL Score | Title
 :--:|:--:|:--
 """ +
 str(anime_top_response["items"][0]["rank"]) + """ | """ + str(anime_top_response["items"][0]["score"]) + """ | [""" + anime_top_response["items"][0]["title"] + """](""" + anime_top_response["items"][0]["url"] + """) \n""" +
@@ -170,7 +159,7 @@ str(anime_top_response["items"][4]["rank"]) + """ | """ + str(anime_top_response
 
 ---
 ## Random anime
-Type | Score |Title
+Type | MAL Score | Title
 :--|:--:|:--
 """ +
 anime_random1_response["type"]  + """ | """ + str(anime_random1_response["score"]) + """ | [""" + anime_random1_response["title"] + """](""" + anime_random1_response["url"] + """) \n""" +
@@ -180,9 +169,12 @@ anime_random4_response["type"]  + """ | """ + str(anime_random4_response["score"
 anime_random5_response["type"]  + """ | """ + str(anime_random5_response["score"]) + """ | [""" + anime_random5_response["title"] + """](""" + anime_random5_response["url"] + """) \n""" + """
 
 ---
-## Today's random user is... """ + chosen_mal_username + """!
-### """ + chosen_mal_username + """ ranks these anime highest! """
-
+Today's random user is... """ + chosen_mal_username + """!
+## """ + chosen_mal_username + """'s favourite anime
+Type | MAL Score | Title
+:--|:--:|:--
+""" +
+favourite_str
 
 )
  
