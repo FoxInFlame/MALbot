@@ -21,14 +21,15 @@ import urllib.request        # for more HTTP requests
 d = datetime.datetime.now()  # set current date as d to check weekday
 
 while True: # Always run
-  if d.isoweekday() == 4: # 1 is monday | 7 is sunday ()
+  str(datetime.datetime.now()) # output datetime so we can know.
+  if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
 
     reddit = praw.Reddit(
       user_agent='MyAnimeList Daily Bot v0.1',
       client_id='kBddA1U8dPkUtA',
       client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-      username='MAL-bot',#os.environ['REDDIT_USERNAME'],
-      password='Fox_MALbot_2002')#os.environ['REDDIT_PASSWORD'])
+      username=os.environ['REDDIT_USERNAME'],
+      password=os.environ['REDDIT_PASSWORD'])
   
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
