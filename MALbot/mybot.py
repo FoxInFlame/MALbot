@@ -34,7 +34,7 @@ def scheduled_job():
     username=os.environ['REDDIT_USERNAME'],
     password=os.environ['REDDIT_PASSWORD'])
   
-    subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
+  subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
 
   post = reddit.submission(id='6d5wyk') # A post on /r/malbottesting
 
