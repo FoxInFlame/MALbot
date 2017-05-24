@@ -20,152 +20,155 @@ import urllib.request        # for more HTTP requests
 
 d = datetime.datetime.now()  # set current date as d to check weekday
 
-while True: # Always run
-  str(datetime.datetime.now()) # output datetime so we can know.
-  if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
+sched = BlockingScheduler()
 
-    reddit = praw.Reddit(
-      user_agent='MyAnimeList Daily Bot v0.1',
-      client_id='kBddA1U8dPkUtA',
-      client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-      username=os.environ['REDDIT_USERNAME'],
-      password=os.environ['REDDIT_PASSWORD'])
+@sched.scheduled_job('interval', hour=24)
+def scheduled_job():
+  str(datetime.datetime.now()) # output datetime so we can know.
+  #if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
+
+  reddit = praw.Reddit(
+    user_agent='MyAnimeList Daily Bot v0.1',
+    client_id='kBddA1U8dPkUtA',
+    client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
+    username=os.environ['REDDIT_USERNAME'],
+    password=os.environ['REDDIT_PASSWORD'])
   
     subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
 
-    post = reddit.submission(id='6d5wyk') # A post on /r/malbottesting
+  post = reddit.submission(id='6d5wyk') # A post on /r/malbottesting
 
-    # Top Anime
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.top.php", headers={'User-Agent': "Magic Browser"})
-    connection = urllib.request.urlopen(request);
-    anime_top_response_raw = connection.read()
-    anime_top_response = json.loads(anime_top_response_raw.decode('utf-8'))
+  # Top Anime
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.top.php", headers={'User-Agent': "Magic Browser"})
+  connection = urllib.request.urlopen(request);
+  anime_top_response_raw = connection.read()
+  anime_top_response = json.loads(anime_top_response_raw.decode('utf-8'))
 
-    # First random
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php", headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    anime_random1_response_raw = connection.read();
-    print(anime_random1_response_raw)
-    anime_random1_response = json.loads(anime_random1_response_raw.decode('utf-8'))
-    anime_random1_id = anime_random1_response["id"]
+  # First random
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php", headers={'User-Agent': 'Magic Browser'})
+  connection = urllib.request.urlopen(request)
+  anime_random1_response_raw = connection.read();
+  print(anime_random1_response_raw)
+  anime_random1_response = json.loads(anime_random1_response_raw.decode('utf-8'))
+  anime_random1_id = anime_random1_response["id"]
 
-    # Second random
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id), headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    anime_random2_response_raw = connection.read();
-    print(anime_random2_response_raw)
-    anime_random2_response = json.loads(anime_random2_response_raw.decode('utf-8'))
-    anime_random2_id = anime_random2_response["id"]
+  # Second random
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id), headers={'User-Agent': 'Magic Browser'})
+  connection = urllib.request.urlopen(request)
+  anime_random2_response_raw = connection.read();
+  print(anime_random2_response_raw)
+  anime_random2_response = json.loads(anime_random2_response_raw.decode('utf-8'))
+  anime_random2_id = anime_random2_response["id"]
 
-    # Third random
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id), headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    anime_random3_response_raw = connection.read();
-    print(anime_random3_response_raw)
-    anime_random3_response = json.loads(anime_random3_response_raw.decode('utf-8'))
-    anime_random3_id = anime_random3_response["id"]
+  # Third random
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id), headers={'User-Agent': 'Magic Browser'})
+  connection = urllib.request.urlopen(request)
+  anime_random3_response_raw = connection.read();
+  print(anime_random3_response_raw)
+  anime_random3_response = json.loads(anime_random3_response_raw.decode('utf-8'))
+  anime_random3_id = anime_random3_response["id"]
 
-    # Fourth random
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id), headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    anime_random4_response_raw = connection.read();
-    print(anime_random4_response_raw)
-    anime_random4_response = json.loads(anime_random4_response_raw.decode('utf-8'))
-    anime_random4_id = anime_random4_response["id"]
+  # Fourth random
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id), headers={'User-Agent': 'Magic Browser'})
+  connection = urllib.request.urlopen(request)
+  anime_random4_response_raw = connection.read();
+  print(anime_random4_response_raw)
+  anime_random4_response = json.loads(anime_random4_response_raw.decode('utf-8'))
+  anime_random4_id = anime_random4_response["id"]
 
-    # Fifth random
-    print("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id))
-    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id), headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    anime_random5_response_raw = connection.read();
-    print(anime_random5_response_raw)
-    anime_random5_response = json.loads(anime_random5_response_raw.decode('utf-8'))
+  # Fifth random
+  print("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id))
+  request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id), headers={'User-Agent': 'Magic Browser'})
+  connection = urllib.request.urlopen(request)
+  anime_random5_response_raw = connection.read();
+  print(anime_random5_response_raw)
+  anime_random5_response = json.loads(anime_random5_response_raw.decode('utf-8'))
 
 
-    print("grabbing random person...")
-    # Grab random person with flair
-    flairs = []
-    for flair in subreddit.flair():
-      flairs.append(flair)
+  print("grabbing random person...")
+  # Grab random person with flair
+  flairs = []
+  for flair in subreddit.flair():
+    flairs.append(flair)
 
-    chosen_flair = random.choice(flairs);
-    chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
-    chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[0]
+  chosen_flair = random.choice(flairs);
+  chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
+  chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[0]
 
-    print(chosen_mal_username)
+  print(chosen_mal_username)
 
-    while True:
-      try:
-        request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/user.info.USERNAME.php?username=" + chosen_mal_username, headers={'User-Agent': 'Magic Browser'})
-        connection = urllib.request.urlopen(request)
-      except urllib.error.HTTPError as e:
-        if e.code == 404:
-          chosen_flair = random.choice(flairs)
-          chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
-          chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
+  while True:
+    try:
+      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/user.info.USERNAME.php?username=" + chosen_mal_username, headers={'User-Agent': 'Magic Browser'})
+      connection = urllib.request.urlopen(request)
+    except urllib.error.HTTPError as e:
+      if e.code == 404:
+        chosen_flair = random.choice(flairs)
+        chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
+        chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
       else:
-        break;
+    break;
         
-    endpoints = [
-      "https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json",
-      "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
-    ]
+  endpoints = [
+    "https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json",
+    "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
+  ]
 
-    user_response = {}
+  user_response = {}
 
-    def getInfoFromUsername(endpoint):
-      print('Starting download from ' + endpoint)
-      request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
-      connection = urllib.request.urlopen(request)
-      if("malappinfo" in endpoint):
-        user_list_response_raw = connection.read()
-        user_response["user_list_response"] = xmltodict.parse(user_list_response_raw)
-      else:
-        user_profile_response_raw = connection.read()
-        user_response["user_profile_response"] = json.loads(user_profile_response_raw.decode('utf-8'))
-      
-    jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
-
-    gevent.joinall(jobs)
-
-
-
-    user_favourites = {}
-    
-    # for anime in user_profile_response["favourites"]["anime"]:
-    def favouriteToArray(id):
-      print('Starting to download anime info: ' + id)
-      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + id, headers={'User-Agent': 'Magic Browser'})
-      connection = urllib.request.urlopen(request)
-      user_favourite_response_raw = connection.read()
-      user_favourites[id] = json.loads(user_favourite_response_raw.decode('utf8'));
-      print("Beginning loop through user list to find anime with id: " + id)
-      for user_animeinfo in user_response["user_list_response"]["myanimelist"]["anime"]:
-        if(user_animeinfo["series_animedb_id"] == id):
-          user_favourites[id]["user_score"] = user_animeinfo["my_score"]
-
-
-    jobs = [gevent.spawn(favouriteToArray, animeid) for animeid in user_response["user_profile_response"]["favourites"]["anime"]]
-
-    gevent.joinall(jobs) # call all gvents
-
-    favourite_arr = [] # Will fill up with markdown
-    for key, favourite in user_favourites.items():
-      favourite_arr.append(
-        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(int(favourite["user_score"]))) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
-      )
-
-    if(len(favourite_arr) == 0):
-      favourite_str = "*None* | *None* | *None*"
+  def getInfoFromUsername(endpoint):
+    print('Starting download from ' + endpoint)
+    request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
+    connection = urllib.request.urlopen(request)
+    if("malappinfo" in endpoint):
+      user_list_response_raw = connection.read()
+      user_response["user_list_response"] = xmltodict.parse(user_list_response_raw)
     else:
-      favourite_str = ''.join(favourite_arr)
+      user_profile_response_raw = connection.read()
+      user_response["user_profile_response"] = json.loads(user_profile_response_raw.decode('utf-8'))
+     
+  jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
+
+  gevent.joinall(jobs)
+
+
+
+  user_favourites = {}
+    
+  # for anime in user_profile_response["favourites"]["anime"]:
+  def favouriteToArray(id):
+    print('Starting to download anime info: ' + id)
+    request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + id, headers={'User-Agent': 'Magic Browser'})
+    connection = urllib.request.urlopen(request)
+    user_favourite_response_raw = connection.read()
+    user_favourites[id] = json.loads(user_favourite_response_raw.decode('utf8'));
+    print("Beginning loop through user list to find anime with id: " + id)
+    for user_animeinfo in user_response["user_list_response"]["myanimelist"]["anime"]:
+      if(user_animeinfo["series_animedb_id"] == id):
+        user_favourites[id]["user_score"] = user_animeinfo["my_score"]
+
+
+  jobs = [gevent.spawn(favouriteToArray, animeid) for animeid in user_response["user_profile_response"]["favourites"]["anime"]]
+
+  gevent.joinall(jobs) # call all gvents
+
+  favourite_arr = [] # Will fill up with markdown
+  for key, favourite in user_favourites.items():
+    favourite_arr.append(
+      favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(int(favourite["user_score"]))) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
+    )
+
+  if(len(favourite_arr) == 0):
+    favourite_str = "*None* | *None* | *None*"
+  else:
+    favourite_str = ''.join(favourite_arr)
 
 
 
 
-    # submit(title, selftext=None, url=None resubmit=True, send_replies=True)
-    # edit(body)
-    post.edit("""#Here is today's overview of MyAnimeList!
+  # submit(title, selftext=None, url=None resubmit=True, send_replies=True)
+  # edit(body)
+  post.edit("""#Here is today's overview of MyAnimeList!
 ^^Updated ^^""" + d.strftime('%Y-%m-%d') + """
 
 ---
@@ -196,6 +199,6 @@ Today's random user is... """ + chosen_mal_username + """!
 Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 :--|:--:|:--:|:--
 """ + favourite_str)
-    print("Done.")
- 
-  time.sleep(86400) # seconds
+  print("Done.")
+
+sched.start()
