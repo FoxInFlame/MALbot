@@ -13,7 +13,7 @@ import random         # for random user selection
 import sys            # system related stuff
 import os             # os related stuff
 
-monkey.patch_all()
+monkey.patch_ssl()
 import urllib.request # for HTTP requests
 
 d = datetime.datetime.now()
