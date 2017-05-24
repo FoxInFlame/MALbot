@@ -73,6 +73,7 @@ while True: # Always run
     anime_random4_id = anime_random4_response["id"]
 
     # Fifth random
+    print("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id))
     request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.random.php?not=" + str(anime_random1_id) + "," + str(anime_random2_id) + "," + str(anime_random3_id) + "," + str(anime_random4_id), headers={'User-Agent': 'Magic Browser'})
     connection = urllib.request.urlopen(request)
     anime_random5_response_raw = connection.read();
