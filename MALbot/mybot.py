@@ -134,14 +134,13 @@ while True: # Always run
     
     # for anime in user_profile_response["favourites"]["anime"]:
     def favouriteToArray(id):
-      print('Starting download from ' + id)
+      print('Starting to download anime info: ' + id)
       request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + id, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
       user_favourite_response_raw = connection.read()
-      print(user_favourite_response_raw)
       user_favourites[id] = json.loads(user_favourite_response_raw.decode('utf8'));
       for user_animeinfo in user_response["user_list_response"]["myanimelist"]["anime"]:
-        pprint(user_animeinfo)
+        pprint.pprint(user_animeinfo)
 
 
     jobs = [gevent.spawn(favouriteToArray, animeid) for animeid in user_response["user_profile_response"]["favourites"]["anime"]]
