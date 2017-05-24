@@ -201,4 +201,4 @@ favourite_str
 )
     print("Done.")
  
-  time.sleep(300) # seconds
+  time.sleep(86400) # seconds
