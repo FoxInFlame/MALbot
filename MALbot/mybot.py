@@ -3,6 +3,7 @@
 import pdb            # Python Debugger
 import time           # for sleep
 import praw           # for reddit
+import xmltodict      # xml to json | fast as well :)
 import json           # for parsing json
 import datetime       # time of the week
 import gevent
@@ -23,7 +24,7 @@ while True: # Always run
     reddit = praw.Reddit(
       user_agent='MyAnimeList Daily Bot v0.1',
       client_id='kBddA1U8dPkUtA',
-      client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs', 
+      client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
       username='MAL-bot',
       password='Fox_MALbot_2002')
   
@@ -100,21 +101,34 @@ while True: # Always run
           chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
       else:
         break;
+        
+    endpoints = [
+      "https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json",
+      "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
+    ]
+
+    def getInfoFromUsername(endpoint):
+      print('Starting download from ' + endpoint)
+      request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
+      connection = urllib.request.urlopen(request)
+      if("malappinfo" in endpoint):
+        user_list_response_raw = connection.read()
+        user_list_response = xmltodict.parse(user_list_response)
+      else:
+        user_profile_response_raw = connection.read()
+        user_profile_response = json.loads(user_profile_response_raw.decode('utf-8'))
+      
+    jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
+    gevent.joinall(jobs)
+    
+    pprint(user_list_response)
 
 
-    print("https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json")
-    request = urllib.request.Request("https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json", headers={'User-Agent': 'Magic Browser'})
-    connection = urllib.request.urlopen(request)
-    user_list_response_raw = connection.read();
-    print(user_list_response_raw)
-    user_list_response = json.loads(user_list_response_raw.decode('utf-8'))
 
     user_favourites = {}
-
-
-      
-    # for anime in user_list_response["favourites"]["anime"]:
-    def print_head(url):
+    
+    # for anime in user_profile_response["favourites"]["anime"]:
+    def favouriteToArray(url):
       print('Starting download from ' + url)
       request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + url, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
@@ -122,7 +136,7 @@ while True: # Always run
       print(user_favourite_response_raw)
       user_favourites[url] = json.loads(user_favourite_response_raw.decode('utf8'));
 
-    jobs = [gevent.spawn(print_head, anime) for anime in user_list_response["favourites"]["anime"]]
+    jobs = [gevent.spawn(favouriteToArray, anime) for anime in user_profile_response["favourites"]["anime"]]
 
     gevent.joinall(jobs) # call all gvents
 
