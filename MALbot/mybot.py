@@ -112,48 +112,44 @@ while True: # Always run
     ]
 
     user_response = {}
-    user_profile_response = {}
 
     def getInfoFromUsername(endpoint):
       print('Starting download from ' + endpoint)
       request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
-      print(endpoint)
       if("malappinfo" in endpoint):
-        print("user list")
         user_list_response_raw = connection.read()
         user_response["user_list_response"] = xmltodict.parse(user_list_response_raw)
       else:
-        print("user prof")
         user_profile_response_raw = connection.read()
         user_response["user_profile_response"] = json.loads(user_profile_response_raw.decode('utf-8'))
       
     jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
 
     gevent.joinall(jobs)
-    
-    pprint.pprint(user_response)
 
 
 
     user_favourites = {}
     
     # for anime in user_profile_response["favourites"]["anime"]:
-    def favouriteToArray(url):
-      print('Starting download from ' + url)
-      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + url, headers={'User-Agent': 'Magic Browser'})
+    def favouriteToArray(id):
+      print('Starting download from ' + id)
+      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.info.ID.php?id=" + id, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
       user_favourite_response_raw = connection.read()
       print(user_favourite_response_raw)
-      user_favourites[url] = json.loads(user_favourite_response_raw.decode('utf8'));
+      user_favourites[id] = json.loads(user_favourite_response_raw.decode('utf8'));
+      for user_animeinfo in user_response["user_list_response"]["myanimelist"]["anime"]:
+        pprint(user_animeinfo)
 
-    jobs = [gevent.spawn(favouriteToArray, anime) for anime in user_profile_response["favourites"]["anime"]]
+
+    jobs = [gevent.spawn(favouriteToArray, animeid) for animeid in user_response["user_profile_response"]["favourites"]["anime"]]
 
     gevent.joinall(jobs) # call all gvents
 
     favourite_arr = [] # Will fill up with markdown
     for key, favourite in user_favourites.items():
-      print(favourite["title"])
       favourite_arr.append(
         favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
       )
@@ -195,7 +191,7 @@ anime_random5_response["type"]  + """ | """ + str(anime_random5_response["score"
 
 ---
 Today's random user is... """ + chosen_mal_username + """!
-## """ + chosen_mal_username + """'s favourite anime
+## [""" + chosen_mal_username + """](https://myanimelist.net/profile/""" + chosen_mal_username + """)'s favourite anime
 Type | MAL Score | Title
 :--|:--:|:--
 """ +
