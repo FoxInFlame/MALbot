@@ -111,8 +111,8 @@ while True: # Always run
       "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
     ]
 
-    user_list_response = None
-    user_profile_response = None
+    user_list_response = {}
+    user_profile_response = {}
 
     def getInfoFromUsername(endpoint):
       print('Starting download from ' + endpoint)
