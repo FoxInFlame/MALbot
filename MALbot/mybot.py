@@ -27,7 +27,7 @@ while True: # Always run
       username='MAL-bot',#os.environ['REDDIT_USERNAME'],
       password='Fox_MALbot_2002')#os.environ['REDDIT_PASSWORD'])
   
-    subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
+    subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
     for flair in subreddit.flair():
       print(flair)
