@@ -165,39 +165,40 @@ while True: # Always run
 
     # submit(title, selftext=None, url=None resubmit=True, send_replies=True)
     # edit(body)
-    post.edit("""#These are the top anime on MAL today!
+    post.edit("""#Here is today's overview of MyAnimeList!
 ^^Updated ^^""" + d.strftime('%Y-%m-%d') + """
 
 ---
-## Top ranking anime
+## Top 5 ranking anime
 Rank | MAL Score | Title
 :--:|:--:|:--
 """ +
-str(anime_top_response["items"][0]["rank"]) + """ | """ + str(anime_top_response["items"][0]["score"]) + """ | [""" + anime_top_response["items"][0]["title"] + """](""" + anime_top_response["items"][0]["url"] + """) \n""" +
-str(anime_top_response["items"][1]["rank"]) + """ | """ + str(anime_top_response["items"][1]["score"]) + """ | [""" + anime_top_response["items"][1]["title"] + """](""" + anime_top_response["items"][1]["url"] + """) \n""" +
-str(anime_top_response["items"][2]["rank"]) + """ | """ + str(anime_top_response["items"][2]["score"]) + """ | [""" + anime_top_response["items"][2]["title"] + """](""" + anime_top_response["items"][2]["url"] + """) \n""" +
-str(anime_top_response["items"][3]["rank"]) + """ | """ + str(anime_top_response["items"][3]["score"]) + """ | [""" + anime_top_response["items"][3]["title"] + """](""" + anime_top_response["items"][3]["url"] + """) \n""" +
-str(anime_top_response["items"][4]["rank"]) + """ | """ + str(anime_top_response["items"][4]["score"]) + """ | [""" + anime_top_response["items"][4]["title"] + """](""" + anime_top_response["items"][4]["url"] + """) \n""" + """
+str(anime_top_response["items"][0]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][0]["score"]) + """ | [""" + anime_top_response["items"][0]["title"] + """](""" + anime_top_response["items"][0]["url"] + """) \n""" +
+str(anime_top_response["items"][1]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][1]["score"]) + """ | [""" + anime_top_response["items"][1]["title"] + """](""" + anime_top_response["items"][1]["url"] + """) \n""" +
+str(anime_top_response["items"][2]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][2]["score"]) + """ | [""" + anime_top_response["items"][2]["title"] + """](""" + anime_top_response["items"][2]["url"] + """) \n""" +
+str(anime_top_response["items"][3]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][3]["score"]) + """ | [""" + anime_top_response["items"][3]["title"] + """](""" + anime_top_response["items"][3]["url"] + """) \n""" +
+str(anime_top_response["items"][4]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][4]["score"]) + """ | [""" + anime_top_response["items"][4]["title"] + """](""" + anime_top_response["items"][4]["url"] + """) \n""" + """
 
 ---
-## Random anime
+## 5 Random anime
 Type | MAL Score | Title
 :--|:--:|:--
 """ +
-anime_random1_response["type"]  + """ | """ + str(anime_random1_response["score"]) + """ | [""" + anime_random1_response["title"] + """](""" + anime_random1_response["url"] + """) \n""" +
-anime_random2_response["type"]  + """ | """ + str(anime_random2_response["score"]) + """ | [""" + anime_random2_response["title"] + """](""" + anime_random2_response["url"] + """) \n""" +
-anime_random3_response["type"]  + """ | """ + str(anime_random3_response["score"]) + """ | [""" + anime_random3_response["title"] + """](""" + anime_random3_response["url"] + """) \n""" +
-anime_random4_response["type"]  + """ | """ + str(anime_random4_response["score"]) + """ | [""" + anime_random4_response["title"] + """](""" + anime_random4_response["url"] + """) \n""" +
-anime_random5_response["type"]  + """ | """ + str(anime_random5_response["score"]) + """ | [""" + anime_random5_response["title"] + """](""" + anime_random5_response["url"] + """) \n""" + """
+anime_random1_response["type"]  + """ | """ + str('{0:.2f}'.anime_random1_response["score"]) + """ | [""" + anime_random1_response["title"] + """](""" + anime_random1_response["url"] + """) \n""" +
+anime_random2_response["type"]  + """ | """ + str('{0:.2f}'.anime_random2_response["score"]) + """ | [""" + anime_random2_response["title"] + """](""" + anime_random2_response["url"] + """) \n""" +
+anime_random3_response["type"]  + """ | """ + str('{0:.2f}'.anime_random3_response["score"]) + """ | [""" + anime_random3_response["title"] + """](""" + anime_random3_response["url"] + """) \n""" +
+anime_random4_response["type"]  + """ | """ + str('{0:.2f}'.anime_random4_response["score"]) + """ | [""" + anime_random4_response["title"] + """](""" + anime_random4_response["url"] + """) \n""" +
+anime_random5_response["type"]  + """ | """ + str('{0:.2f}'.anime_random5_response["score"]) + """ | [""" + anime_random5_response["title"] + """](""" + anime_random5_response["url"] + """) \n""" + """
 
 ---
 Today's random user is... """ + chosen_mal_username + """!
 ## [""" + chosen_mal_username + """](https://myanimelist.net/profile/""" + chosen_mal_username + """)'s favourite anime
-Type | MAL Score | User Score | Title
-:--|:--:|:--
+Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
+:--|:--:|:--:|:--
 """ +
 favourite_str
 
 )
+    print("Done.")
  
   time.sleep(300) # seconds
