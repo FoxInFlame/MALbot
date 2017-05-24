@@ -24,15 +24,14 @@ while True: # Always run
       user_agent='MyAnimeList Daily Bot v0.1',
       client_id='kBddA1U8dPkUtA',
       client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-      username=os.environ['REDDIT_USERNAME'],
-      password=os.environ['REDDIT_PASSWORD'])
-
-    print(os.environ["REDDIT_USERNAME"])
-    print(os.environ['REDDIT_USERNAME'])
+      username='MAL-bot',#os.environ['REDDIT_USERNAME'],
+      password='Fox_MALbot_2002')#os.environ['REDDIT_PASSWORD'])
   
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
     post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
+
+    pprint.pprint(post)
 
     # Top Anime
     request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.top.php", headers={'User-Agent': "Magic Browser"})
