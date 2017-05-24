@@ -29,7 +29,8 @@ while True: # Always run
   
     subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
 
-    pprint.pprint(subreddit.flair())
+    for flair in subreddit.flair():
+      print(flair)
 
     post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
 
