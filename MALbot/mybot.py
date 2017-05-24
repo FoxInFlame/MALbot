@@ -31,9 +31,9 @@ while True: # Always run
       username=os.environ['REDDIT_USERNAME'],
       password=os.environ['REDDIT_PASSWORD'])
   
-    subreddit = reddit.subreddit('malbottesting') # testing subreddit
+    subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
 
-    post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
+    post = reddit.submission(id='6d5wyk') # A post on /r/malbottesting
 
     # Top Anime
     request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/anime.top.php", headers={'User-Agent': "Magic Browser"})
