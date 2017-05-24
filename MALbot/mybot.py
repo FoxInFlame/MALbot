@@ -118,15 +118,18 @@ while True: # Always run
       print('Starting download from ' + endpoint)
       request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request)
+      print(endpoint)
       if("malappinfo" in endpoint):
+        print("user list")
         user_list_response_raw = connection.read()
         user_list_response = xmltodict.parse(user_list_response_raw)
-        pprint.pprint(xmltodict.parse(user_list_response_raw))
       else:
+        print("user prof")
         user_profile_response_raw = connection.read()
         user_profile_response = json.loads(user_profile_response_raw.decode('utf-8'))
       
     jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
+
     gevent.joinall(jobs)
     
     pprint.pprint(user_list_response)
