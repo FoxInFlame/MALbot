@@ -24,8 +24,11 @@ while True: # Always run
       user_agent='MyAnimeList Daily Bot v0.1',
       client_id='kBddA1U8dPkUtA',
       client_secret='SVFGuKd6hgpz2_X9UodRzjgpYvs',
-      username='MAL-bot',
-      password='Fox_MALbot_2002')
+      username=os.environ['REDDIT_USERNAME'],
+      password=os.environ['REDDIT_PASSWORD'])
+
+    print(os.environ["REDDIT_USERNAME"])
+    print(os.environ['REDDIT_USERNAME'])
   
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
 
