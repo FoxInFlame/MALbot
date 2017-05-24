@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
 
-import pdb            # Python Debugger
-import gevent
-from gevent import monkey
-import pprint         # print stuff
-import random         # for random user selection
-import sys            # system related stuff
-import os             # os related stuff
-monkey.patch_all()
+import pdb                   # Python Debugger
+import sys                   # system related stuff
+import os                    # os related stuff
+import pprint                # print stuff
+import random                # for random user selection
+import gevent                # syncrhonous loop api
+from gevent import monkey    # for monkey patching
+monkey.patch_all()           # make sure to monkey patch before importing praw
+# <pokechu22> But at least it makes a suggestion - try doing the monkey patching before you import praw/anything else (would be a stupid workaround, but it might work)
+# https://github.com/kennethreitz/requests/issues/3752
 
-import time           # for sleep
-import praw           # for reddit
-import xmltodict      # xml to json | fast as well :)
-import json           # for parsing json
-import datetime       # time of the week
-import urllib.request # for HTTP requests
+import time                  # for sleepin'
+import praw                  # for reddit API
+import xmltodict             # xml to json | fast as well :)
+import json                  # for parsing json
+import datetime              # time of the week
+import urllib.request        # for more HTTP requests
 
-d = datetime.datetime.now()
-
-sys.setrecursionlimit(1000)
+d = datetime.datetime.now()  # set current date as d to check weekday
 
 while True: # Always run
-  if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
+  if d.isoweekday() == 4: # 1 is monday | 7 is sunday ()
 
     reddit = praw.Reddit(
       user_agent='MyAnimeList Daily Bot v0.1',
@@ -30,11 +30,7 @@ while True: # Always run
       username='MAL-bot',#os.environ['REDDIT_USERNAME'],
       password='Fox_MALbot_2002')#os.environ['REDDIT_PASSWORD'])
   
-    print(reddit.user.me())
     subreddit = reddit.subreddit('malbottesting') # testing subreddit
-
-    for flair in subreddit.flair():
-      print(flair)
 
     post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
 
@@ -124,6 +120,7 @@ while True: # Always run
       if("malappinfo" in endpoint):
         user_list_response_raw = connection.read()
         user_list_response = xmltodict.parse(user_list_response_raw)
+        pprint.pprint(xmltodict.parse(user_list_response_raw))
       else:
         user_profile_response_raw = connection.read()
         user_profile_response = json.loads(user_profile_response_raw.decode('utf-8'))
