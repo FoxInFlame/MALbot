@@ -11,7 +11,6 @@ from gevent import monkey
 import pprint         # print stuff
 import random         # for random user selection
 import os             # os related stuff
-from xml.dom import minidom        # for parsing XML
 
 monkey.patch_all()
 import urllib.request # for HTTP requests
@@ -113,7 +112,7 @@ while True: # Always run
       connection = urllib.request.urlopen(request)
       if("malappinfo" in endpoint):
         user_list_response_raw = connection.read()
-        user_list_response = xmltodict.parse(user_list_response)
+        user_list_response = xmltodict.parse(user_list_response_raw)
       else:
         user_profile_response_raw = connection.read()
         user_profile_response = json.loads(user_profile_response_raw.decode('utf-8'))
