@@ -10,12 +10,15 @@ import gevent
 from gevent import monkey
 import pprint         # print stuff
 import random         # for random user selection
+import sys            # system related stuff
 import os             # os related stuff
 
 monkey.patch_all()
 import urllib.request # for HTTP requests
 
 d = datetime.datetime.now()
+
+sys.setrecursionlimit(1000)
 
 while True: # Always run
   if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
