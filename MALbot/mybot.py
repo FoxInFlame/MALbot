@@ -107,7 +107,7 @@ def scheduled_job():
         chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
         chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
       else:
-    break;
+        break;
         
   endpoints = [
     "https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json",
@@ -169,7 +169,7 @@ def scheduled_job():
   # submit(title, selftext=None, url=None resubmit=True, send_replies=True)
   # edit(body)
   post.edit("""#Here is today's overview of MyAnimeList!
-^^Updated ^^""" + d.strftime('%Y-%m-%d') + """
+^^Generated automatically by MAL-bot at ^^""" + d.strftime('%Y-%m-%d') + """
 
 ---
 ## Top 5 ranking anime
