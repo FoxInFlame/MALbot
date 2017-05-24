@@ -139,8 +139,10 @@ while True: # Always run
       connection = urllib.request.urlopen(request)
       user_favourite_response_raw = connection.read()
       user_favourites[id] = json.loads(user_favourite_response_raw.decode('utf8'));
+      print("Beginning loop through user list to find anime with id: " + id)
       for user_animeinfo in user_response["user_list_response"]["myanimelist"]["anime"]:
-        pprint.pprint(user_animeinfo)
+        if(user_animeinfo["series_animedb_id"] == id):
+          user_favourites[id]["user_score"] = user_animeinfo["my_score"]
 
 
     jobs = [gevent.spawn(favouriteToArray, animeid) for animeid in user_response["user_profile_response"]["favourites"]["anime"]]
@@ -150,7 +152,7 @@ while True: # Always run
     favourite_arr = [] # Will fill up with markdown
     for key, favourite in user_favourites.items():
       favourite_arr.append(
-        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
+        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(favourite["user_score"])) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
       )
 
     if(len(favourite_arr) == 0):
@@ -191,7 +193,7 @@ anime_random5_response["type"]  + """ | """ + str(anime_random5_response["score"
 ---
 Today's random user is... """ + chosen_mal_username + """!
 ## [""" + chosen_mal_username + """](https://myanimelist.net/profile/""" + chosen_mal_username + """)'s favourite anime
-Type | MAL Score | Title
+Type | MAL Score | User Score | Title
 :--|:--:|:--
 """ +
 favourite_str
