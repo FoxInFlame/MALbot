@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import pdb            # Python Debugger
-import time           # for sleep
-import praw           # for reddit
-import xmltodict      # xml to json | fast as well :)
-import json           # for parsing json
-import datetime       # time of the week
 import gevent
 from gevent import monkey
 import pprint         # print stuff
 import random         # for random user selection
 import sys            # system related stuff
 import os             # os related stuff
+monkey.patch_all()
 
-monkey.patch_ssl()
+import time           # for sleep
+import praw           # for reddit
+import xmltodict      # xml to json | fast as well :)
+import json           # for parsing json
+import datetime       # time of the week
 import urllib.request # for HTTP requests
 
 d = datetime.datetime.now()
