@@ -152,7 +152,7 @@ while True: # Always run
     favourite_arr = [] # Will fill up with markdown
     for key, favourite in user_favourites.items():
       favourite_arr.append(
-        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(favourite["user_score"])) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
+        favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(int(favourite["user_score"]))) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
       )
 
     if(len(favourite_arr) == 0):
