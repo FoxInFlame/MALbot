@@ -30,7 +30,7 @@ while True: # Always run
     subreddit = reddit.subreddit('MyAnimeList') # testing subreddit
 
     pprint.pprint(subreddit)
-    
+
     post = reddit.submission(id='6cg0vq') # A post on /r/malbottesting
 
     # Top Anime
@@ -83,7 +83,7 @@ while True: # Always run
     print("grabbing random person...")
     # Grab random person with flair
     flairs = []
-    for flair in subreddit.flair(limit=None):
+    for flair in subreddit.flair():
       flairs.append(flair)
 
     chosen_flair = random.choice(flairs);
