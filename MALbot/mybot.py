@@ -195,10 +195,7 @@ Today's random user is... """ + chosen_mal_username + """!
 ## [""" + chosen_mal_username + """](https://myanimelist.net/profile/""" + chosen_mal_username + """)'s favourite anime
 Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 :--|:--:|:--:|:--
-""" +
-favourite_str
-
-)
+""" + favourite_str)
     print("Done.")
  
   time.sleep(86400) # seconds
