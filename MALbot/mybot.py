@@ -111,7 +111,7 @@ while True: # Always run
       "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
     ]
 
-    user_list_response = {}
+    user_response = {}
     user_profile_response = {}
 
     def getInfoFromUsername(endpoint):
@@ -122,17 +122,17 @@ while True: # Always run
       if("malappinfo" in endpoint):
         print("user list")
         user_list_response_raw = connection.read()
-        user_list_response = xmltodict.parse(user_list_response_raw)
+        user_response["user_list_response"] = xmltodict.parse(user_list_response_raw)
       else:
         print("user prof")
         user_profile_response_raw = connection.read()
-        user_profile_response = json.loads(user_profile_response_raw.decode('utf-8'))
+        user_response["user_profile_response"] = json.loads(user_profile_response_raw.decode('utf-8'))
       
     jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
 
     gevent.joinall(jobs)
     
-    pprint.pprint(user_list_response)
+    pprint.pprint(user_response)
 
 
 
