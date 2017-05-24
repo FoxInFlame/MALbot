@@ -173,22 +173,22 @@ while True: # Always run
 Rank | MAL Score | Title
 :--:|:--:|:--
 """ +
-str(anime_top_response["items"][0]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][0]["score"]) + """ | [""" + anime_top_response["items"][0]["title"] + """](""" + anime_top_response["items"][0]["url"] + """) \n""" +
-str(anime_top_response["items"][1]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][1]["score"]) + """ | [""" + anime_top_response["items"][1]["title"] + """](""" + anime_top_response["items"][1]["url"] + """) \n""" +
-str(anime_top_response["items"][2]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][2]["score"]) + """ | [""" + anime_top_response["items"][2]["title"] + """](""" + anime_top_response["items"][2]["url"] + """) \n""" +
-str(anime_top_response["items"][3]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][3]["score"]) + """ | [""" + anime_top_response["items"][3]["title"] + """](""" + anime_top_response["items"][3]["url"] + """) \n""" +
-str(anime_top_response["items"][4]["rank"]) + """ | """ + str('{0:.2f}'.anime_top_response["items"][4]["score"]) + """ | [""" + anime_top_response["items"][4]["title"] + """](""" + anime_top_response["items"][4]["url"] + """) \n""" + """
+str(anime_top_response["items"][0]["rank"]) + """ | """ + str('{0:.2f}'.format(anime_top_response["items"][0]["score"])) + """ | [""" + anime_top_response["items"][0]["title"] + """](""" + anime_top_response["items"][0]["url"] + """) \n""" +
+str(anime_top_response["items"][1]["rank"]) + """ | """ + str('{0:.2f}'.format(anime_top_response["items"][1]["score"])) + """ | [""" + anime_top_response["items"][1]["title"] + """](""" + anime_top_response["items"][1]["url"] + """) \n""" +
+str(anime_top_response["items"][2]["rank"]) + """ | """ + str('{0:.2f}'.format(anime_top_response["items"][2]["score"])) + """ | [""" + anime_top_response["items"][2]["title"] + """](""" + anime_top_response["items"][2]["url"] + """) \n""" +
+str(anime_top_response["items"][3]["rank"]) + """ | """ + str('{0:.2f}'.format(anime_top_response["items"][3]["score"])) + """ | [""" + anime_top_response["items"][3]["title"] + """](""" + anime_top_response["items"][3]["url"] + """) \n""" +
+str(anime_top_response["items"][4]["rank"]) + """ | """ + str('{0:.2f}'.format(anime_top_response["items"][4]["score"])) + """ | [""" + anime_top_response["items"][4]["title"] + """](""" + anime_top_response["items"][4]["url"] + """) \n""" + """
 
 ---
 ## 5 Random anime
 Type | MAL Score | Title
 :--|:--:|:--
 """ +
-anime_random1_response["type"]  + """ | """ + str('{0:.2f}'.anime_random1_response["score"]) + """ | [""" + anime_random1_response["title"] + """](""" + anime_random1_response["url"] + """) \n""" +
-anime_random2_response["type"]  + """ | """ + str('{0:.2f}'.anime_random2_response["score"]) + """ | [""" + anime_random2_response["title"] + """](""" + anime_random2_response["url"] + """) \n""" +
-anime_random3_response["type"]  + """ | """ + str('{0:.2f}'.anime_random3_response["score"]) + """ | [""" + anime_random3_response["title"] + """](""" + anime_random3_response["url"] + """) \n""" +
-anime_random4_response["type"]  + """ | """ + str('{0:.2f}'.anime_random4_response["score"]) + """ | [""" + anime_random4_response["title"] + """](""" + anime_random4_response["url"] + """) \n""" +
-anime_random5_response["type"]  + """ | """ + str('{0:.2f}'.anime_random5_response["score"]) + """ | [""" + anime_random5_response["title"] + """](""" + anime_random5_response["url"] + """) \n""" + """
+anime_random1_response["type"]  + """ | """ + str('{0:.2f}'.format(anime_random1_response["score"])) + """ | [""" + anime_random1_response["title"] + """](""" + anime_random1_response["url"] + """) \n""" +
+anime_random2_response["type"]  + """ | """ + str('{0:.2f}'.format(anime_random2_response["score"])) + """ | [""" + anime_random2_response["title"] + """](""" + anime_random2_response["url"] + """) \n""" +
+anime_random3_response["type"]  + """ | """ + str('{0:.2f}'.format(anime_random3_response["score"])) + """ | [""" + anime_random3_response["title"] + """](""" + anime_random3_response["url"] + """) \n""" +
+anime_random4_response["type"]  + """ | """ + str('{0:.2f}'.format(anime_random4_response["score"])) + """ | [""" + anime_random4_response["title"] + """](""" + anime_random4_response["url"] + """) \n""" +
+anime_random5_response["type"]  + """ | """ + str('{0:.2f}'.format(anime_random5_response["score"])) + """ | [""" + anime_random5_response["title"] + """](""" + anime_random5_response["url"] + """) \n""" + """
 
 ---
 Today's random user is... """ + chosen_mal_username + """!
