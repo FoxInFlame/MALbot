@@ -1,1 +1,1 @@
-bot: python MALbot\mybot.py
+bot: python MALbot/mybot.py

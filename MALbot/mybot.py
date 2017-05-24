@@ -106,6 +106,9 @@ while True: # Always run
       "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
     ]
 
+    user_list_response = None
+    user_profile_response = None
+
     def getInfoFromUsername(endpoint):
       print('Starting download from ' + endpoint)
       request = urllib.request.Request(endpoint, headers={'User-Agent': 'Magic Browser'})
@@ -120,7 +123,7 @@ while True: # Always run
     jobs = [gevent.spawn(getInfoFromUsername, endpoint) for endpoint in endpoints]
     gevent.joinall(jobs)
     
-    pprint(user_list_response)
+    pprint.pprint(user_list_response)
 
 
 
