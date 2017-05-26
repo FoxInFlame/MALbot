@@ -18,6 +18,11 @@ import xmltodict             # xml to json | fast as well :)
 import json                  # for parsing json
 import datetime              # time of the week
 import urllib.request        # for more HTTP requests
+import argparse              # for parsing arguments
+
+parser = argparse.ArgumentParser(description='MALbot automatically updates a Reddit post to feature a daily overview of MyAnimeList.net')
+parser.add_argument('--once', action='store_true', help='Only execute once.')
+arguments = parser.parser_args()
 
 d = datetime.datetime.now()  # set current date as d to check weekday
 
@@ -207,7 +212,10 @@ Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 # def end
 
 
-scheduler = BlockingScheduler()
+if arguments.once == True:
+  scheduled_job()
+else:
+  scheduler = BlockingScheduler()
 
-scheduler.add_job(scheduled_job, 'interval', hours=24)
-scheduler.start()
+  scheduler.add_job(scheduled_job, 'interval', hours=24)
+  scheduler.start()
