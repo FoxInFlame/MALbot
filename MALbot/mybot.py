@@ -204,5 +204,5 @@ Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 
 scheduler = BlockingScheduler()
 
-job = scheduler.add_job(scheduled_job, 'interval', hours=24)
+scheduler.add_job(scheduled_job, 'interval', minutes=2)
 scheduler.start()
