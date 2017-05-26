@@ -173,7 +173,7 @@ def scheduled_job(): # will call at the bottom
   # submit(title, selftext=None, url=None resubmit=True, send_replies=True)
   # edit(body)
   post.edit("""#Here is today's overview of MyAnimeList!
-^^Generated automatically by MAL-bot at ^^""" + d.strftime('%Y-%m-%d') + """
+^^Generated ^^automatically ^^by ^^MAL-bot ^^at ^^""" + d.strftime('%Y-%m-%d') + """
 
 ---
 ## Top 5 ranking anime
@@ -210,5 +210,5 @@ Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 
 scheduler = BlockingScheduler()
 
-scheduler.add_job(scheduled_job, 'interval', minutes=2)
+scheduler.add_job(scheduled_job, 'interval', hours=24)
 scheduler.start()
