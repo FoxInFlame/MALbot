@@ -21,10 +21,7 @@ import urllib.request        # for more HTTP requests
 
 d = datetime.datetime.now()  # set current date as d to check weekday
 
-sched = BlockingScheduler()
-
-@sched.scheduled_job('interval', hour=24)
-def scheduled_job():
+def scheduled_job(): # will call at the bottom
   str(datetime.datetime.now()) # output datetime so we can know.
   #if d.isoweekday() == 3: # 1 is monday | 7 is sunday ()
 
@@ -202,4 +199,10 @@ Type | MAL Score | """ + chosen_mal_username + """'s Score | Title
 """ + favourite_str)
   print("Done.")
 
-sched.start()
+# def end
+
+
+scheduler = BlockingScheduler()
+
+job = scheduler.add_job(scheduled_job, 'interval', hours=24)
+scheduler.start()
