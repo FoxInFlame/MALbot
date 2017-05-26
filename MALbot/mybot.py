@@ -83,7 +83,7 @@ def scheduled_job(): # will call at the bottom
   anime_random5_response = json.loads(anime_random5_response_raw.decode('utf-8'))
 
 
-  print("grabbing random person...")
+  print("Grabbing random person...")
   # Grab random person with flair
   flairs = []
   for flair in subreddit.flair():
@@ -93,18 +93,23 @@ def scheduled_job(): # will call at the bottom
   chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
   chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[0]
 
+  print("Chosen username:")
   print(chosen_mal_username)
 
   while True:
     try:
+      print("Checking if profile exists...")
       request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/user.info.USERNAME.php?username=" + chosen_mal_username, headers={'User-Agent': 'Magic Browser'})
-      connection = urllib.request.urlopen(request)
+      connection = urllib.request.urlopen(request) # No need to store response, it's just for testing connection
     except urllib.error.HTTPError as e:
-      if e.code == 404:
-        chosen_flair = random.choice(flairs)
+      if e.code == 404: # Doesn't exist
+        print("Username doesn't exist... trying new one:")
+        chosen_flair = random.choice(flairs) # New random
         chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
         chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
+        print(chosen_mal_username)
       else:
+        print("user.info.USERNAME returned an error othan than 404!")
         break;
         
   endpoints = [
