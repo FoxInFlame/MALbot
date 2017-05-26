@@ -162,9 +162,8 @@ def scheduled_job(): # will call at the bottom
       favourite["type"] + """ | """ + str('{0:.2f}'.format(favourite["score"])) + """ | """ + str('{0:.2f}'.format(int(favourite["user_score"]))) + """ | [""" + favourite["title"] + """](""" + favourite["url"] + """) \n"""
     )
 
-  if(len(favourite_arr) == 0):
-    favourite_str = "*None* | *None* | *None*"
-  else:
+  favourite_str = "*None* | *None* | *None*"
+  if(len(favourite_arr) != 0):
     favourite_str = ''.join(favourite_arr)
 
 
