@@ -22,7 +22,7 @@ import argparse              # for parsing arguments
 
 parser = argparse.ArgumentParser(description='MALbot automatically updates a Reddit post to feature a daily overview of MyAnimeList.net')
 parser.add_argument('--once', action='store_true', help='Only execute once.')
-arguments = parser.parser_args()
+arguments = parser.parse_args()
 
 d = datetime.datetime.now()  # set current date as d to check weekday
 
