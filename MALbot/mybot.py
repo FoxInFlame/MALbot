@@ -96,10 +96,10 @@ def scheduled_job(): # will call at the bottom
   print("Chosen username:")
   print(chosen_mal_username)
 
-  while True:
+  def checkProfileExists(username):
     try:
       print("Checking if profile exists...")
-      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/user.info.USERNAME.php?username=" + chosen_mal_username, headers={'User-Agent': 'Magic Browser'})
+      request = urllib.request.Request("https://www.matomari.tk/api/0.4/methods/user.info.USERNAME.php?username=" + username, headers={'User-Agent': 'Magic Browser'})
       connection = urllib.request.urlopen(request) # No need to store response, it's just for testing connection
     except urllib.error.HTTPError as e:
       if e.code == 404: # Doesn't exist
@@ -107,11 +107,12 @@ def scheduled_job(): # will call at the bottom
         chosen_flair = random.choice(flairs) # New random
         chosen_mal_username = chosen_flair["flair_text"].split("/")[-1]
         chosen_mal_username = chosen_mal_username.split("?")[0].split("#")[-1]
-        print(chosen_mal_username)
+        checkProfileExists(chosen_mal_username)
       else:
         print("user.info.USERNAME returned an error othan than 404!")
-        break;
-        
+        return;
+  checkProfileExists(chosen_mal_username)
+
   endpoints = [
     "https://www.matomari.tk/api/0.3/user/info/" + chosen_mal_username + ".json",
     "https://www.matomari.tk/api/0.3/general/malappinfo.php?u=" + chosen_mal_username + "&type=anime&status=all"
